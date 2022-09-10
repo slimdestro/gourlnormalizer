@@ -1,3 +1,8 @@
+/*
+	@ go-url-normalize[RFC 3986]
+	@ Normalize URL | Count unique normalized URL | Count unique normalized URL per TLD
+*/
+
 package normalizer
 
 import (
@@ -8,14 +13,13 @@ import (
 	"regexp"
 )
 
-var (
-	Ports = map[string]int{
-		"http":  80,
-		"https": 443,
-		"ftp":   21,
-	}
-)
+/*
+	@ CountUniqueNormalizedUrls counts unique normalized urls
+	@ calls NormalizeURL()
+	@ Ex: ["https://example.com?a=1&b=2", "https://example.com?b=2&a=1"] returns 1
+	@ As these 2 urls are same after they are normalized
 
+*/
 func CountUniqueNormalizedUrls(urls []string) int { 
 	output := make(map[string]int)
 
@@ -31,6 +35,11 @@ func CountUniqueNormalizedUrls(urls []string) int {
 	return len(output)
 }
 
+/*
+	@ CountUniqueNormalizedUrls counts unique normalized url per TLD
+	@ calls NormalizeURL()
+	@ Ex: ["https://example.com", "https://subdomain.example.com"] returns map["example.com" => 2]
+*/
 func CountUniqueNormalizedUrlsPerTopLevelDomain(urls []string) map[string]int {  
 	output := make(map[string]int)
 
@@ -45,16 +54,26 @@ func CountUniqueNormalizedUrlsPerTopLevelDomain(urls []string) map[string]int {
 	return output
 }
 
-// extracts tld from url
+// extracts tld(top level domsin) from url
 func fetchTLD(domain string) string {
 	pattern, _ := regexp.Compile(`[^.]*\.[^.]{2,3}(?:\.[^.]{2,3})?$`) 
 	replacer := strings.NewReplacer("http://","", "https://", "")
-
 	return replacer.Replace(pattern.FindString(domain))
 }
 
+var (
+	Ports = map[string]int{
+		"http":  80,
+		"https": 443,
+		"ftp":   21,
+	}
+)
 
-// Separate metrhod so that it can be used by both functions
+/* 
+	@ NormalizeURL() returns RFC-3986 formatted string
+	@ this method is also being used as helper:
+	@ CountUniqueNormalizedUrlsPerTopLevelDomain && CountUniqueNormalizedUrls
+*/
 func NormalizeURL(s string) (string, error) {
 	s = strings.TrimSpace(s)
 
