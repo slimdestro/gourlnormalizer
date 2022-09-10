@@ -31,7 +31,7 @@ import (
 func main() { 	 
 	normalizedUrl,_ := normalizer.NormalizeURL("https://example.com?b=2&a=1")
 	fmt.Println(normalizedUrl)
-    // compare both url to see what has changed
+        // compare both url to see what has changed
  
 	urls__ := []string{"https://example.com?a=1&b=2", "https://example.com?b=2&a=1"}
 	fmt.Println(normalizer.CountUniqueNormalizedUrls(urls__))
