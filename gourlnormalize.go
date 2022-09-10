@@ -1,4 +1,4 @@
-package github.com/slimdestro/gourlnormalizer
+package normalizer
 
 import (
 	"fmt"
