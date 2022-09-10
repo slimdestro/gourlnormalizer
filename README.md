@@ -28,18 +28,14 @@ import (
 	"fmt"
 	"github.com/slimdestro/gourlnormalizer"
 )
-func main() { 		
-	/* calls to NormalizeURL() */
-	url := "https://example.com?b=2&a=1"
-	normalizedUrl,_ := normalizer.NormalizeURL(url)
+func main() { 	 
+	normalizedUrl,_ := normalizer.NormalizeURL("https://example.com?b=2&a=1")
 	fmt.Println(normalizedUrl)
     // compare both url to see what has changed
-
-	/* calls to CountUniqueUrls() */
+ 
 	urls__ := []string{"https://example.com?a=1&b=2", "https://example.com?b=2&a=1"}
 	fmt.Println(normalizer.CountUniqueNormalizedUrls(urls__))
-	
-	/* calls to CountUniqueUrlsPerTopLevelDomain() */
+	 
 	urls___ := []string{"https://tempo.com", "https://example.com", "https://subdomain.example.com"}
 	fmt.Println(normalizer.CountUniqueNormalizedUrlsPerTopLevelDomain(urls___))
 }
